@@ -178,7 +178,7 @@ display: none;
   #quiz input[type="submit"] {
     margin-top: 20px;
   }
-  #next{
+  .next{
     padding-top: 5px;
   }
   .card-bottom{
@@ -222,9 +222,7 @@ display: none;
     outline: none; /* Remove focus outline */
   }
   
-  .custom-button:active {
-    pointer-events: none; /* Disable pointer events when active */
-  }
+
 /* Global Reset */
 * {
     font-family: 'Allerta', arial, Tahoma;
@@ -504,4 +502,9 @@ audio:nth-child(2), audio:nth-child(4), audio:nth-child(6) {
 .audio{
     height: 50px;
     width: 160px;
+}
+.show{
+    width: 195px;
+    padding-top: 175px;
+    color: black;
 }

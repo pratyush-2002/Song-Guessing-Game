@@ -1,10 +1,9 @@
-
 {%extends "layout.html"%}
 {%block body%}
 
 <div id="car">
     <div class="card"  id="bike" >
-        <form id="quiz">
+        <form id="quiz" method="post">
             <div class="question">
                 <audio controls class="audio">
                     <source src="{{url}}" type="audio/mpeg">
@@ -83,21 +82,10 @@
                     </div>
                 </div>
             </div>
-                <div class="options">
-                    <!-- <form action="/game" method="post">
-                        {% for title, url in song_dic.items() %}
-                            <input class="custom-button" type="submit" name="chosen_song" value="{{ title }}">
-                        {% endfor %}
-                    </form> -->
-                    
-                    
-                    <form action="/game" method="post">
+                <div class="options"> 
                         {% for title, url in song_dic.items() %}
                             <button type="submit" class="custom-button" name="chosen_song" value="{{ title }}">{{ title }}</button>
                         {% endfor %}
-                    </form>
-                    
-                    
                 </div> 
         </form>
         <div class="card-name">          
@@ -109,7 +97,7 @@
         </ul>
         <div class="card-bottom">
             <a href="/"  id="next">HOME PAGE</a>
-            <a href="#" id="next">NEXT --></a>
+            <a href="/game" id="next">NEXT --></a>
         </div>
     </div>
 </div>

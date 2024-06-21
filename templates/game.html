@@ -3,7 +3,7 @@
 
 <div id="car">
     <div class="card"  id="bike" >
-        <form id="quiz" method="post">
+        <div id="quiz">
             <div class="question">
                 <audio controls class="audio">
                     <source src="{{url}}" type="audio/mpeg">
@@ -84,16 +84,16 @@
             </div>
                 <div class="options"> 
                         {% for title, url in song_dic.items() %}
-                            <button type="submit" class="custom-button" name="chosen_song" value="{{ title }}">{{ title }}</button>
+                            <button type="submit" class="custom-button" onclick="btn('{{title}}')" name="chosen_song" value="{{ title }}">{{ title }}</button>
                         {% endfor %}
                 </div> 
-        </form>
+        </div>
         <div class="card-name">          
             <h5 class="card-title">song</h5>
             <p class="card-text">USERNAME: {{name}}</p>
         </div>
         <ul class="score list-group-flush">
-        <li class="list-group-item">SCORE:{{score}}</li>
+        <li id='ha'class="list-group-item">SCORE:</li>
         </ul>
         <div class="card-bottom">
             <a href="/"  id="next">HOME PAGE</a>
@@ -101,6 +101,9 @@
         </div>
     </div>
 </div>
+<script>
+    
+    </script>
 
 
 {% endblock %}

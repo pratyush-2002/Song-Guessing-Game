@@ -1,4 +1,4 @@
-from flask import Flask , render_template,request,session,redirect,url_for,flash
+from flask import Flask , render_template,request,session,redirect,url_for,flash,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
@@ -14,34 +14,24 @@ client_id=os.getenv("Client_id")
 client_secret=os.getenv("client_secret")
 
 app=Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///test.db"
+
 app.secret_key = os.urandom(24)
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # or 'Strict' or 'None'
 app.config['SESSION_COOKIE_SECURE'] = True
 
-db=SQLAlchemy(app)
-
-class Entry(db.Model):
-    id=db.Column(db.Integer,primary_key=True)
-    name=db.Column(db.String(200),nullable=False)
-    score=db.Column(db.Integer,default=0)
-
-    def __repr__(self) -> str:
-        return super().__repr__()
 
 @app.route("/", methods=["GET","POST"])
 def index():
-    if request.method=="POST":
-        name=request.form.get('name',None)
-        entry=Entry(name=name) 
-        db.session.add(entry)
-        db.session.commit()
+    if request.method == "POST":
+        session['name'] = request.form.get('name', '')
+        return redirect("/game") 
     return render_template("index.html")
 
 class Song:
     def __init__(self, client_id, client_secret):
         self.client_id = client_id
         self.client_secret = client_secret
+        session['score']=0
     #we are sending our client id and client secret  which should be in base64 encoded to the url which is specified and we do it using post
     #we post the url then the headers then data
     def get_token(self):
@@ -95,13 +85,11 @@ class Song:
         counter=0
         for element in lis:
             title, artist, url, is_playable = element
-            print(title,url)
             if url and len(title_lis) < 4: # Only add if a valid URL is present
                 dic[title] = url
                 title_lis.append(title)
    
             
-        print(dic)
         chosen_title = random.choice(title_lis)
         return dic, chosen_title
 
@@ -109,34 +97,32 @@ class Song:
 
 @app.route("/game", methods=["POST", "GET"])
 def game():
+    if request.method == "POST" and request.is_json:
+        data = request.get_json()
+        choosen_song = data.get('chosen_song')
+        selected_song = session.get('selected_song', '')
+        if choosen_song == selected_song:
+            session['score'] += 10
+        return jsonify({'score': session['score']})
     session['name'] = request.form.get('name', '')
-    song_dic={}
-    url=''
-    session['score']=0
+    song_dic = {}
+    url = ''
     if request.method == 'POST':
         song_n = Song(client_id, client_secret)
-        token=song_n.get_token()
+        token = song_n.get_token()
         if token:
             songs = song_n.top_songs(token)
             song_data = song_n.extract_songs(songs) if songs else []
             song_dic, selected = song_n.sep_title_url(song_data)
-            session['selected_song'] = selected   # Store selected in session
-            url = song_dic.get(selected, "") 
+            session['selected_song'] = selected
+            url = song_dic.get(selected, "")
+            print(session['selected_song'])
         else:
             flash("Authorization failed. Please check your credentials.")
-        selected_song = session.get('selected_song', '')
-        choosen_song = request.form.get('chosen_song', "")
-        if choosen_song==selected_song:
-            session['score']=session['score']+10
-        else:
-            session['score']=session['score']
-        
-
-    return render_template("game.html", name=session['name'], song_dic=song_dic, url=url,score=session['score'])
+    return render_template("game.html", name=session['name'], song_dic=song_dic, url=url)
+    
 
 
 
 if __name__=="__main__":
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)

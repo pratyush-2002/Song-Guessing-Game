@@ -1,5 +1,18 @@
-{%extends "layout.html"%}
-{%block body%}
-<div class="show">{{name}}  {{score}} {{fail}} song:{{selected_song}}  your guess:{{choosen_song}}</div>
-
-{% endblock %}
+document.querySelectorAll(".custom-button").forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const chosenSong = button.value;
+        fetch('/game', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ chosen_song: chosenSong })
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('.list-group-item').textContent = `SCORE: ${data.score}`;
+        });
+    });
+});

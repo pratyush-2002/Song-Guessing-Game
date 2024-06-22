@@ -87,18 +87,17 @@
                             <button type="submit" class="custom-button" onclick="btn('{{title}}')" name="chosen_song" value="{{ title }}">{{ title }}</button>
                         {% endfor %}
                 </div> 
-        </div>
+        </div> 
         <div class="card-name">          
             <h5 class="card-title">song</h5>
             <p class="card-text">USERNAME: {{name}}</p>
         </div>
         <ul class="score list-group-flush">
-        <li id='ha'class="list-group-item">SCORE:</li>
+        <li id='ha'class="list-group-item">SCORE:{{score}}</li>
         </ul>
-        <div class="card-bottom">
-            <a href="/"  id="next">HOME PAGE</a>
-            <a href="/game" id="next">NEXT --></a>
-        </div>
+        <form class="card-bottom" method="POST">
+            <button type="submit">next</button>
+        </form>
     </div>
 </div>
 <script>

@@ -31,7 +31,7 @@ class Song:
     def __init__(self, client_id, client_secret):
         self.client_id = client_id
         self.client_secret = client_secret
-        session['score']=0
+        # session['score']=0
     #we are sending our client id and client secret  which should be in base64 encoded to the url which is specified and we do it using post
     #we post the url then the headers then data
     def get_token(self):
@@ -96,7 +96,7 @@ class Song:
 
 
 @app.route("/game", methods=["POST", "GET"])
-def game():
+def game():   
     if request.method == "POST" and request.is_json:
         data = request.get_json()
         choosen_song = data.get('chosen_song')
@@ -104,10 +104,18 @@ def game():
         if choosen_song == selected_song:
             session['score'] += 10
         return jsonify({'score': session['score']})
-    session['name'] = request.form.get('name', '')
+    
     song_dic = {}
     url = ''
     if request.method == 'POST':
+        if 'score' in session:
+            session['score'] = session['score']
+        else:
+            session['score'] = 0
+        if 'name' in session:
+            session['name'] = session['name']
+        else:
+            session['name'] = request.form.get('name', '')
         song_n = Song(client_id, client_secret)
         token = song_n.get_token()
         if token:
@@ -119,7 +127,7 @@ def game():
             print(session['selected_song'])
         else:
             flash("Authorization failed. Please check your credentials.")
-    return render_template("game.html", name=session['name'], song_dic=song_dic, url=url)
+    return render_template("game.html", name=session['name'], song_dic=song_dic, url=url,score=session['score'])
     
 
 

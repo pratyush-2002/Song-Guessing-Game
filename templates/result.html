@@ -1,0 +1,15 @@
+{%extends "layout.html"%}
+  {%block body%}
+  <div class="card" style="width: 18rem;" id="result">
+    <div class="card-header">
+      result
+    </div>
+    <ul class="list-group list-group-flush" >
+      <li  class="list-group-item scoring">Name :{{name}}</li>
+      <li  class="list-group-item scoring">Score :{{score}}</li>
+      <li  class="list-group-item scoring">Thank You for playing! </li>  
+      <li  class="list-group-item scoring"><a href="/reset" target="_blank" class="button card-bottom">restart</a></li>    
+    </ul>
+  </div>
+  
+{%endblock%}

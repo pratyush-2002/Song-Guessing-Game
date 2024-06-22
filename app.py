@@ -104,10 +104,15 @@ def game():
         if choosen_song == selected_song:
             session['score'] += 10
         return jsonify({'score': session['score']})
+    if 'question_count' not in session:
+        session['question_count'] = 0
+    if session['question_count'] >= 5:
+        return redirect(url_for("result"))
     
     song_dic = {}
     url = ''
     if request.method == 'POST':
+        session['question_count'] += 1
         if 'score' in session:
             session['score'] = session['score']
         else:
@@ -127,10 +132,19 @@ def game():
             print(session['selected_song'])
         else:
             flash("Authorization failed. Please check your credentials.")
-    return render_template("game.html", name=session['name'], song_dic=song_dic, url=url,score=session['score'])
+    return render_template("game.html", name=session['name'], song_dic=song_dic, url=url,score=session['score'],count=session['question_count'])
     
 
-
+@app.route("/reset")
+def reset():
+    session.clear()  # Clear all session data
+    return redirect(url_for("index"))
+@app.route("/result")
+def result():
+    return render_template("result.html", name=session.get('name',''),score=session.get('score', 0))
+@app.route("/playmodel", methods=['POST'])
+def playmodel():
+    return render_template("playmodel.html")
 
 if __name__=="__main__":
     app.run(debug=True)

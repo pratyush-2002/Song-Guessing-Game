@@ -10,10 +10,13 @@
                     <input autocomplete="off" required type="text" class="form-control" name="name"  placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">    
                 </div>
             </div>
-            <div class="start" role="group" aria-label="Vertical button group">
+            <div class="start" role="group" aria-label="Vertical button group" style="display: flex;justify-content: space-between;gap: 25px;">
                 <input class="btn btn-primary" type="submit" value="start">
         </form>
-                <button type="button" class="btn btn-primary">how to play</button>
+            <form action="/playmodel" method="POST">
+                <div class="start" role="group" aria-label="Vertical button group">
+                    <input class="btn btn-primary" type="submit" value="howToPlayModal">
+            </form>   
             </div>    
     </div>
     

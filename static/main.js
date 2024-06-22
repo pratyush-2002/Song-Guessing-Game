@@ -1,4 +1,5 @@
 function btn(chosenSong) {
+    
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://127.0.0.1:5000/game', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -13,3 +14,10 @@ function btn(chosenSong) {
     const params = JSON.stringify({ chosen_song: chosenSong });
     xhr.send(params);
 }
+document.querySelectorAll('.custom-button').forEach(button => {
+    button.addEventListener('click', function() {
+        document.querySelectorAll('.custom-button').forEach(btn => {
+            btn.disabled = true;
+        });
+    });
+});

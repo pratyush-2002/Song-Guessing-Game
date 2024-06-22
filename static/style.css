@@ -142,7 +142,7 @@ body {
 
 #bike {
     background: linear-gradient(to right, #ffe3d8, #ace2db);
-    height: 550px;
+    height: 575px;
     width: 900px;
     margin: auto;
     padding: 20px;
@@ -152,7 +152,7 @@ body {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    top: 150px;
+    top: 140px;
 }
 
 #quiz {
@@ -190,7 +190,7 @@ body {
     text-align: center;
     display: flex;
     justify-content: center;
-    gap: 350px;
+    width: 75px;
 
 }
 
@@ -200,11 +200,12 @@ body {
 }
 
 .score {
-    height: 75px;
+    height: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: larger;
+    gap:650px
 }
 
 .custom-button {
@@ -230,18 +231,21 @@ body {
 
 .container-audio {
     width: 99%;
-    height: 135px;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #eee;
-    color: #444;
-    margin: 5px auto;
-    overflow: hidden;
+  height: 100px;
+  padding: 20px;
+  border-radius: 5px;
+  margin: 5px auto;
+    margin-left: auto;
+  overflow: hidden;
+  margin-left: 30px;
+
 }
 
 audio {
-    width: 100%;
+    width: 99%;
+    height: 30px;
 }
+
 
 .container-audio .colum1 {
     width: 23px;
@@ -378,4 +382,12 @@ audio {
     width: 195px;
     padding-top: 175px;
     color: black;
+}
+#result{
+    top:275px;
+    background: linear-gradient(to right, #ffe3d8, #ace2db);
+    margin: auto;
+}
+.scoring{
+    background: linear-gradient(to right, #ffe3d8, #ace2db);
 }
